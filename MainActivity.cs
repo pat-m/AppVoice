@@ -166,19 +166,23 @@ namespace AppVoice
         public void OnClick_VoiceOff(object sender, System.EventArgs e)
         {
             
-            if (this.DroppedPhoneTable && this.VoiceChoice == 1 && this.DroppedPhoneStatus && this.Reset)
+            if (this.VoiceChoice == 1 && this.Reset)
             {
+                Console.WriteLine("ddddddddzqdqdqdqdqd");
                 this.StartPlayer(Resource.Raw.Voice01_09);
                 this.DroppedPhoneTable = false;
                 this.DroppedPhoneStatus = false;
                 this.VoiceChoice = 0;
                 this.Reset = false;
-            } else if (this.DroppedPhoneTable && this.VoiceChoice == 2 && this.DroppedPhoneStatus && this.Reset) {
+                this.InitSequence();
+            } else if (this.VoiceChoice == 2 && this.Reset) {
+                Console.WriteLine("eeeeeeeeee");
                 this.StartPlayer(Resource.Raw.Voice02_09);
                 this.DroppedPhoneTable = false;
                 this.DroppedPhoneStatus = false;
                 this.VoiceChoice = 0;
                 this.Reset = false;
+                this.InitSequence();
             } else
             {
                 this.TvMessage.Text = "Choisir la voix 1 ou 2 pour commencer";
@@ -186,6 +190,7 @@ namespace AppVoice
                 this.Reset = false;
                 this.DroppedPhoneTable = false;
                 this.DroppedPhoneStatus = false;
+                this.InitSequence();
             }
         }
         public void OnClick_TestVibrate(object sender, System.EventArgs e)
@@ -231,6 +236,12 @@ namespace AppVoice
                     this.TvMessage.Text = "Posez rapidement votre smartphone";
                     Accelerometer.ReadingChanged += this.FirstSequence;
                 }
+
+                if (CountSequences == 1)
+                {
+                    this.TvMessage.Text = "Je suis la";
+                    OrientationSensor.ReadingChanged += this.SecondSequence;
+                }
             });
         }
 
@@ -241,37 +252,38 @@ namespace AppVoice
                 
 
                 // Drop the phone on table
-                if (this.AccelerometerReader.AccZ > 1.4 && !this.DroppedPhoneTable && !this.DroppedPhoneStatus && !this.MediaPlayerReading)
+                if (this.AccelerometerReader.AccZ > 1.5 && !this.DroppedPhoneTable && !this.DroppedPhoneStatus && !this.MediaPlayerReading)
                 {
                     this.TvMessage.Text = "Reprenez votre Smartphone";
                     this.DroppedPhoneTable = true;
                 }
 
                 // Take the phone and begin 
-                if (!this.DroppedPhoneStatus && this.DroppedPhoneTable && this.AccelerometerReader.AccZ < 0 && !this.MediaPlayerReading && !this.Reset)
+                if (!this.DroppedPhoneStatus && this.DroppedPhoneTable && this.AccelerometerReader.AccZ < 1.5 && !this.MediaPlayerReading && !this.Reset)
                 {
                     this.TvMessage.Text = "Salut !";
                     this.DroppedPhoneStatus = true;
                     this.DroppedPhoneTable = false;
                     this.StartPlayer(Resource.Raw.Voice01_01);
                     this.CountSequences++;
+                    this.InitSequence();
                 }
 
                 // Drop again phone to stop and reset
-                if (this.AccelerometerReader.AccZ > 1.2 && this.DroppedPhoneStatus && !this.Reset)
+                if (this.AccelerometerReader.AccZ > 1.5 && this.DroppedPhoneStatus && !this.Reset && !this.AccelerometerReader.Shaked)
                 {
                     this.TvMessage.Text = "A Bientôt";
                     this.DroppedPhoneTable = true;
                     this.Reset = true;
-                    if (this.DroppedPhoneStatus && this.DroppedPhoneTable && this.VoiceChoice == 1)
+                    if (this.DroppedPhoneStatus && this.DroppedPhoneTable && this.VoiceChoice == 1 && this.Reset)
                     {  
                         this.StartPlayer(Resource.Raw.Voice01_09);
                     }
 
-                    if (this.DroppedPhoneStatus && this.DroppedPhoneTable && this.VoiceChoice == 2)
+                    if (this.DroppedPhoneStatus && this.DroppedPhoneTable && this.VoiceChoice == 2 && this.Reset)
                     {
-                        Console.WriteLine("SON2");
-                        this.StartPlayer(Resource.Raw.Voice02_09);
+               
+                        //this.StartPlayer(Resource.Raw.Voice02_09);
                     }
 
                     this.CountSequences = 0;
@@ -279,10 +291,39 @@ namespace AppVoice
             });
         }
 
-        private async void WaitLoading()
+        private void SecondSequence(object sender, OrientationSensorChangedEventArgs e)
         {
-            Console.WriteLine("Wait Ready");
-            await Task.Delay(3000);
+            Console.WriteLine(e.Reading.Orientation + "fffffff");
+        }
+
+        private void ThirdSequence()
+        {
+            
+        }
+
+        private void FourthSequence()
+        {
+            
+        }
+
+        private void FithSequence()
+        {
+            
+        }
+
+        private void SixSequence()
+        {
+            
+        }
+
+        private void SevenSequence()
+        {
+            
+        }
+
+        private void EightSequence()
+        {
+           
         }
     }
 }

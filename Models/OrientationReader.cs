@@ -46,7 +46,7 @@ namespace AppVoice.Models
                 {
                     OrientationSensor.Stop();
                     this.Started = false;
-                    Console.WriteLine("Orientation is stoped");
+                    Console.WriteLine("Orientation is stopped");
                 }
 
                 else

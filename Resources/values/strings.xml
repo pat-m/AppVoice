@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AppVoice</string>
+    <string name="action_settings">Settings</string>
+    <string name="select_voice">Choisir la voix 1 ou 2 pour commencer</string>
+    <string name="test_vibration">Test Vibration</string>
+    <string name="voice_off">Voice OFF</string>
+    <string name="voice_1">Voice 1</string>
+    <string name="voice_2">Voice 2</string>
+</resources>

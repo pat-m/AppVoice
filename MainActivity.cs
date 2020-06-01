@@ -165,33 +165,13 @@ namespace AppVoice
 
         public void OnClick_VoiceOff(object sender, System.EventArgs e)
         {
-            
-            if (this.VoiceChoice == 1 && this.Reset)
-            {
-                Console.WriteLine("ddddddddzqdqdqdqdqd");
-                this.StartPlayer(Resource.Raw.Voice01_09);
-                this.DroppedPhoneTable = false;
-                this.DroppedPhoneStatus = false;
-                this.VoiceChoice = 0;
-                this.Reset = false;
-                this.InitSequence();
-            } else if (this.VoiceChoice == 2 && this.Reset) {
-                Console.WriteLine("eeeeeeeeee");
-                this.StartPlayer(Resource.Raw.Voice02_09);
-                this.DroppedPhoneTable = false;
-                this.DroppedPhoneStatus = false;
-                this.VoiceChoice = 0;
-                this.Reset = false;
-                this.InitSequence();
-            } else
-            {
-                this.TvMessage.Text = "Choisir la voix 1 ou 2 pour commencer";
-                this.VoiceChoice = 0;
-                this.Reset = false;
-                this.DroppedPhoneTable = false;
-                this.DroppedPhoneStatus = false;
-                this.InitSequence();
-            }
+
+            this.TvMessage.Text = "Choisir la voix 1 ou 2 pour commencer";
+            this.VoiceChoice = 0;
+            this.Reset = false;
+            this.DroppedPhoneTable = false;
+            this.DroppedPhoneStatus = false;
+            this.InitSequence();
         }
         public void OnClick_TestVibrate(object sender, System.EventArgs e)
         {
@@ -249,8 +229,6 @@ namespace AppVoice
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                
-
                 // Drop the phone on table
                 if (this.AccelerometerReader.AccZ > 1.5 && !this.DroppedPhoneTable && !this.DroppedPhoneStatus && !this.MediaPlayerReading)
                 {
@@ -259,7 +237,7 @@ namespace AppVoice
                 }
 
                 // Take the phone and begin 
-                if (!this.DroppedPhoneStatus && this.DroppedPhoneTable && this.AccelerometerReader.AccZ < 1.5 && !this.MediaPlayerReading && !this.Reset)
+                if (!this.DroppedPhoneStatus && this.DroppedPhoneTable && this.AccelerometerReader.AccZ < 0 && !this.MediaPlayerReading && !this.Reset)
                 {
                     this.TvMessage.Text = "Salut !";
                     this.DroppedPhoneStatus = true;
@@ -270,6 +248,7 @@ namespace AppVoice
                 }
 
                 // Drop again phone to stop and reset
+                
                 if (this.AccelerometerReader.AccZ > 1.5 && this.DroppedPhoneStatus && !this.Reset && !this.AccelerometerReader.Shaked)
                 {
                     this.TvMessage.Text = "A Bientôt";
